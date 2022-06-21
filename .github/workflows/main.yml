@@ -1,0 +1,22 @@
+name: Pandoc Workflow
+
+on: push
+
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: create file list
+        id: files_list
+        run: |
+          mkdir output  # create output dir
+          # this will also include README.md
+          echo "::set-output name=files::$(printf '"%s" './doc_source/*.md)"
+      - uses: docker://rstropek/pandoc-latex
+        with:
+          args: --output=output/aws-cloud-formation-useer-guide.pdf ${{ steps.files_list.outputs.files }} --table-of-contents --toc-depth 6 --number-sections --top-level-division=chapter --highlight-style breezedark
+      - uses: actions/upload-artifact@master
+        with:
+          name: output
+          path: output
