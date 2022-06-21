@@ -10,9 +10,10 @@ jobs:
       - name: create file list
         id: files_list
         run: |
+          cd doc_source/
           mkdir output  # create output dir
           # this will also include README.md
-          echo "::set-output name=files::$(printf '"%s" './doc_source/*.md)"
+          echo "::set-output name=files::$(printf '"%s" ' *.md)"
       - uses: docker://rstropek/pandoc-latex
         with:
           args: --output=output/aws-cloud-formation-useer-guide.pdf ${{ steps.files_list.outputs.files }} --table-of-contents --toc-depth 6 --number-sections --top-level-division=chapter --highlight-style breezedark
