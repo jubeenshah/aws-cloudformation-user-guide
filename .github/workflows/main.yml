@@ -13,10 +13,24 @@ jobs:
           cd doc_source/
           mkdir output  # create output dir
           # Collecting all ECR related files
-          echo "::set-output name=files::$(printf '"%s" ' *\-ecr\-*.md)"
+          echo "::set-output name=files::$(printf '"doc_source/%s" ' *\-ecr\-*.md)"
       - uses: docker://rstropek/pandoc-latex
         with:
           args: --output=doc_source/output/aws-cloud-formation-ecr-guide.pdf ${{ steps.ecr_file_list.outputs.files }} --highlight-style breezedark
+      - uses: actions/upload-artifact@master
+        with:
+          name: output
+          path: doc_source/output
+      - name: Building RDS related PDF
+        id: rds_file_list
+        run: |
+          cd doc_source/
+          mkdir output  # create output dir
+          # Collecting all ECR related files
+          echo "::set-output name=files::$(printf '"doc_source/%s" ' *\-rds\-*.md)"
+      - uses: docker://rstropek/pandoc-latex
+        with:
+          args: --output=doc_source/output/aws-cloud-formation-ecr-guide.pdf ${{ steps.rds_file_list.outputs.files }} --highlight-style breezedark
       - uses: actions/upload-artifact@master
         with:
           name: output
