@@ -16,7 +16,7 @@ jobs:
           echo "::set-output name=files::$(printf '"%s" ' *\-ecr\-*.md)"
       - uses: docker://rstropek/pandoc-latex
         with:
-          args: --output=output/aws-cloud-formation-user-guide.pdf ${{ steps.files_list.outputs.files }} --table-of-contents --toc-depth 6 --number-sections --top-level-division=chapter --highlight-style breezedark
+          args: --output=doc_source/output/aws-cloud-formation-user-guide.pdf ${{ steps.files_list.outputs.files }} --table-of-contents --toc-depth 6 --number-sections --top-level-division=chapter --highlight-style breezedark
       - uses: actions/upload-artifact@master
         with:
           name: output
