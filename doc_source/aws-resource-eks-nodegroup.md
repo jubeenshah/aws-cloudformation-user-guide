@@ -134,7 +134,7 @@ The Amazon Resource Name \(ARN\) of the IAM role to associate with your node gro
 
 `ReleaseVersion`  <a name="cfn-eks-nodegroup-releaseversion"></a>
 The AMI version of the Amazon EKS optimized AMI to use with your node group \(for example, `1.14.7-YYYYMMDD`\)\. By default, the latest available AMI version for the node group's current Kubernetes version is used\. For more information, see [Amazon EKS optimized Linux AMI Versions](https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html) in the *Amazon EKS User Guide*\.  
-Changing this value triggers an update of the node group if one is available\. However, only the latest available AMI release version is valid as an input\. You cannot roll back to a previous AMI release version\.
+Changing this value triggers an update of the node group if one is available\. You can't update other properties at the same time as updating `Release Version`\.
 *Required*: No  
 *Type*: String  
 *Update requires*: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
@@ -158,7 +158,8 @@ The subnets to use for the Auto Scaling group that is created for your node grou
 *Update requires*: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
 
 `Tags`  <a name="cfn-eks-nodegroup-tags"></a>
-The metadata to apply to the node group to assist with categorization and organization\. Each tag consists of a key and an optional value\. You define both\. Node group tags do not propagate to any other resources associated with the node group, such as the Amazon EC2 instances or subnets\.  
+The metadata to apply to the node group to assist with categorization and organization\. Each tag consists of a key and an optional value\. You define both\. Node group tags don't propagate to any other resources associated with the node group, such as the Amazon EC2 instances or subnets\.  
+Updates to `Tags` can't be combined with updates to `ReleaseVersion`, `Version`, or `LaunchTemplate`\.
 *Required*: No  
 *Type*: Json  
 *Update requires*: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
@@ -177,6 +178,7 @@ The node group update configuration\.
 
 `Version`  <a name="cfn-eks-nodegroup-version"></a>
 The Kubernetes version to use for your managed nodes\. By default, the Kubernetes version of the cluster is used, and this is the only accepted specified value\. If you specify `launchTemplate`, and your launch template uses a custom AMI, then don't specify `version`, or the node group deployment will fail\. For more information about using launch templates with Amazon EKS, see [Launch template support](https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html) in the *Amazon EKS User Guide*\.  
+You can't update other properties at the same time as updating `Version`\.
 *Required*: No  
 *Type*: String  
 *Update requires*: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
